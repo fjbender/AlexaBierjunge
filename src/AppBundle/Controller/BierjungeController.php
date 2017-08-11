@@ -15,7 +15,6 @@ class BierjungeController extends Controller
 
     /**
      * @param Request $request
-     * @param Bierjunge $bierjunge
      * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/bierjunge", name="bierjunge")
      */
@@ -27,7 +26,7 @@ class BierjungeController extends Controller
         $alexaRequestFactory = new \Alexa\Request\RequestFactory();
         $alexaRequest = $alexaRequestFactory->fromRawData($rawRequest, [$applicationId]);
         // get the bierjunge service
-        $bierjunge = $this->get(Bierjunge::class);
+        $bierjunge = $this->get(\AppBundle\Service\Bierjunge::class);
         if ($alexaRequest instanceof IntentRequest) {
             $response = new Response();
             $response->respond($bierjunge->haengt());
@@ -38,13 +37,12 @@ class BierjungeController extends Controller
 
     /**
      * @param Request $request
-     * @param Bierjunge $bierjunge
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/test", name="test")
      */
     public function testAction(Request $request)
     {
-        $bierjunge = $this->get(Bierjunge::class);
+        $bierjunge = $this->get(\AppBundle\Service\Bierjunge::class);
         return new \Symfony\Component\HttpFoundation\Response($bierjunge->haengt(), 200);
     }
 }
